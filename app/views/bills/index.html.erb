@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submitted Bills</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <%= stylesheet_link_tag 'employee', media: 'all', 'data-turbolinks-track': true %>
+</head>
+<body>
+  <div class="bill_form" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 30px; margin-top: 30px;">
+    <div id="admin_table" style="display: flex; flex-direction: column; gap: 2rem">
+      <% unless @current_user.is_employee? %>
+        <a href="/employees"><i class="fa-solid fa-arrow-left"></i></a>
+      <% end %>
+
+      <div class="totals-container" style="display: flex; flex-direction: row; margin-bottom: 0;">
+        <div class="flex-item">Total Submitted: <%= @bills.count %></div>
+        <div class="flex-item right">Total Approved: <%= @approved_count %></div>
+      </div>
+
+      <% if @bills.present? %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Date of Submission</th>
+                    <% if @current_user.is_admin? %>
+                      <th>Submitted By</th>
+                      <th>Department</th>
+                    <% end %>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <% @bills.each do |bill| %>
+              <tbody>
+                <tr>
+                    <td><%= bill.bill_type %></td>
+                    <td><%= bill.amount %></td>
+                    <td><%= bill.created_at.strftime('%d-%m-%Y') %></td>
+                    <% if @current_user.is_admin? %>
+                      <td><%= bill.employee.first_name %> <%= bill.employee.last_name %></td>
+                      <td><%= bill.employee.department.name %></td>
+                    <% end %>
+                    
+                    <td>
+                      <% if @current_user.is_admin? %>
+                        <%= form_with(model: bill, local: true, html: { class: 'bill-status' }) do |form| %>
+                          <%= form.select :status, options_for_select([['Pending', 'pending'], ['Approved', 'approved'], ['Rejected', 'rejected']], selected: bill.status), {}, class: "form-select" %>
+                      
+                          <%= form.submit "Save", class: "btn btn-primary" %>
+                        <% end %>
+                      <% else %>
+                        <%= bill.status.capitalize %>
+                      <% end %>
+                    </td>
+                </tr>
+              </tbody>
+            <% end %>
+        </table>
+      <% end %>
+
+
+      <% if @current_user.is_employee? %>
+        <div class="button-container" style="text-align: center; margin: auto; width: 100%">
+          <a href="<%= new_bill_path %>"><button class="btn"><i class="fas fa-plus"></i> Create New Bill</button></a>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reimbursement Form</title>
+    <%= stylesheet_link_tag 'reimbursement', media: 'all', 'data-turbolinks-track': true %>
+</head>
+<body>
+
+  <div class="form-container">
+    <h1>Reimbursement Form</h1>
+
+    <%= form_with url: bills_path, local: true, html: { class: "reimbursement-form" } do |form| %>
+      <form>
+        <%= form.hidden_field :employee_id, value: current_user.id %>
+
+        <div class="reimbursement_form form-group">
+          <label for="type">Type</label>
+          <%= form.select :bill_type, options_for_select([['Food', 'food'], ['Travel', 'travel'], ['Office Supplies', 'office-supplies'], ['Education', 'education'], ['Miscellaneous', 'miscellaneous']]), {}, class: "form-select custom-select" %>
+        </div>
+
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <div class="currency-wrapper">
+            <%= form.text_field :amount, placeholder: "Amount", class: "currency", required: true %>
+          </div>
+        </div>
+
+        <div style="">
+          <button type="submit" class="submit-btn">Submit</button>
+        </div>
+      </form>
+    <% end %>
+  </div>
+
+</body>
+</html>

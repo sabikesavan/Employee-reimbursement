@@ -58,6 +58,10 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  gem 'pry'
+  gem 'bcrypt', '~> 3.1.7'
+  gem 'bootstrap', '~> 5.3.0'
 end
 
 group :test do
@@ -65,3 +69,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem 'sassc-rails'
+gem 'sass-rails'
+gem 'jquery-rails'
+gem 'turbolinks', '~> 5'

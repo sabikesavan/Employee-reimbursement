@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <%= stylesheet_link_tag 'employee', media: 'all', 'data-turbolinks-track': true %>
+</head>
+<body>
+  <div class="create_employee" style="width: 100%; margin: auto;">
+
+    <%= form_with url: employees_path, local: true, html: { class: 'employee-form' } do |form| %>
+      <div style="display: flex; flex-direction: row; gap: 20px;">
+        <a href="/employees" style="margin: auto 0;"><i class="fa-solid fa-arrow-left"></i></a>
+        <h2 style="margin: 0;">Create Employee</h2>
+      </div>
+      <div class="form-container">
+        <div class="third-width">
+          <%= form.label :first_name, "First name" %>
+          <%= form.text_field :first_name, pattern: '[A-Za-z\s\']+', placeholder: "First name", required: true %>
+        </div>
+        
+        <div class="third-width">
+          <%= form.label :last_name, "Last name" %>
+          <%= form.text_field :last_name, pattern: '[A-Za-z\s\']+', placeholder: "Last name" %>
+        </div>
+        
+        <div class="third-width">
+          <%= form.label :email, "Email Address" %>
+          <%= form.email_field :email, placeholder: "Email Address", required: true %>
+        </div>
+        
+        <div class="half-width">
+          <%= form.label :designation, "Designation" %>
+          <%= form.text_field :designation, placeholder: "Designation", required: true %>
+        </div>
+        
+        <div class="third-width">
+          <%= form.label :department, "Department" %>
+          <%= form.select :department_id, options_from_collection_for_select(@departments, :id, :name), prompt: 'Choose...', required: true %>
+        </div>
+      </div>
+        
+      <div style="align-self: end;">
+        <%= form.submit 'Create', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>User Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <%= stylesheet_link_tag 'login', media: 'all', 'data-turbolinks-track': true %>
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="login-form-wrap">
+        <h2>LOGIN</h2>
+        <%= form_with url: signin_path, scope: :session, local: true, id: 'login-form' do |form| %>
+          <p>
+            <%= form.email_field :email, id: 'email', placeholder: 'Email Address', required: true %>
+          </p>
+          <p>
+            <%= form.password_field :password, id: 'password', placeholder: 'Password', required: true %>
+          </p>
+          <p>
+            <%= form.submit 'Login', id: 'login' %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </body>
+</html>

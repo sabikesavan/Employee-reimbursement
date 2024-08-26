@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Information</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <%= stylesheet_link_tag 'employee', media: 'all', 'data-turbolinks-track': true %>
+  </head>
+  <body>
+    <div class="button-container" style="display: flex; flex-direction: row; width: 60%; margin: auto; padding: 20px 0px;">
+      <div class="flex-item"><h3> Employee List </h3></div>
+      <div class="flex-item right"><a href="<%= new_employee_path %>"><button class="btn"><i class="fas fa-plus"></i> Create New Employee</button></a></div>
+    </div>
+
+    <table id="admin_table">
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>Designation</th>
+          <th>Department</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employees.each do |employee| %>
+          <tr>
+            <td><%= employee.first_name %> <%= employee.last_name %></td>
+            <td><%= employee.designation %></td>
+            <td><%= employee.department.name %></td>
+            <td>
+              <a href="<%= employee_path(employee) %>" class="edit-icon" title="Edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="<%= employee_path(employee) %>" data-method="delete" class="delete-icon" title="Delete" data-confirm="Are you sure?">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div style="text-align: center; padding-top: 50px;">
+      <p> <a href='/bills'>Click here</a> to view the bills</p>
+    </div>
+  </body>
+</html>
